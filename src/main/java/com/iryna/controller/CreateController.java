@@ -1,14 +1,12 @@
 package com.iryna.controller;
 
-import com.iryna.service.CreateService;
+import com.iryna.service.AddProductService;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
-@WebServlet("/create")
 public class CreateController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -25,8 +23,7 @@ public class CreateController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-
-        CreateService createService = new CreateService();
+        AddProductService createService = new AddProductService();
         createService.createProduct(request);
     }
 }

@@ -5,7 +5,7 @@ import com.iryna.entity.Product;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class CreateService {
+public class AddProductService {
 
     private DbService dbService = DbService.getDbServiceInstance();
 

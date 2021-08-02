@@ -6,11 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class HtmlResponseCreator {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 
-    public String createTableOfProducts(List<Product> products) {
+    public static String createTableOfProducts(List<Product> products) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<table><tr><th>id</th><th>name</th><th>price</th><th>date</th></tr>");
+        stringBuilder.append("<table>");
+        addHeader(stringBuilder);
         for (Product product : products) {
             addRow(stringBuilder, product);
         }
@@ -18,7 +18,23 @@ public class HtmlResponseCreator {
         return stringBuilder.toString();
     }
 
-    private void addRow(StringBuilder stringBuilder, Product product) {
+    private static void addHeader(StringBuilder stringBuilder) {
+
+        List<String> tableHeaders = List.of("id", "name", "price", "date");
+        stringBuilder.append("<tr>");
+
+        for (String header : tableHeaders) {
+            stringBuilder.append("<th>");
+            stringBuilder.append(header);
+            stringBuilder.append("</th>");
+        }
+        stringBuilder.append("</tr>");
+    }
+
+    private static void addRow(StringBuilder stringBuilder, Product product) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+
         stringBuilder.append("<tr>");
         addColumn(stringBuilder, String.valueOf(product.getId()));
         addColumn(stringBuilder, String.valueOf(product.getName()));
@@ -27,7 +43,7 @@ public class HtmlResponseCreator {
         stringBuilder.append("</tr>");
     }
 
-    private void addColumn(StringBuilder stringBuilder, String columnValue) {
+    private static void addColumn(StringBuilder stringBuilder, String columnValue) {
         stringBuilder.append("<td>");
         stringBuilder.append(columnValue);
         stringBuilder.append("</td>");

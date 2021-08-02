@@ -15,9 +15,9 @@ public class DbService {
             "name VARCHAR(255), " +
             "price REAL, " +
             "creation_date timestamp);";
-    private Connection connection;
 
     private static DbService dbServiceInstance;
+    private Connection connection;
     private SettingsLoader settingsLoader;
 
     public static DbService getDbServiceInstance() {
@@ -38,12 +38,11 @@ public class DbService {
         }
     }
 
-
     public void createTable() {
         try {
-            connection.createStatement().executeQuery(CREATE_TABLE_QUERY);
+            connection.createStatement().executeUpdate(CREATE_TABLE_QUERY);
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw new RuntimeException(exception);
         }
     }
 
@@ -51,7 +50,7 @@ public class DbService {
 
         List<Product> result = new ArrayList<>();
 
-        try (ResultSet resultSet = connection.createStatement().executeQuery(GET_ALL_PRODUCTS_QUERY);) {
+        try (ResultSet resultSet = connection.createStatement().executeQuery(GET_ALL_PRODUCTS_QUERY)) {
             while (resultSet.next()) {
                 result.add(new Product(resultSet.getInt("id"), resultSet.getString("name"),
                         resultSet.getDouble("price"), resultSet.getDate("creation_date")));
@@ -74,7 +73,6 @@ public class DbService {
             exception.printStackTrace();
         }
     }
-
 
     public void updateProduct(Product product) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
