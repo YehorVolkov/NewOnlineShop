@@ -3,16 +3,15 @@ package com.iryna.service;
 import com.iryna.db.DbService;
 import com.iryna.entity.Product;
 
-import javax.servlet.http.HttpServletRequest;
-
 public class AddProductService {
 
-    private DbService dbService = DbService.getDbServiceInstance();
+    private DbService dbService;
 
-    public void createProduct(HttpServletRequest request) {
-        Product product = new Product();
-        product.setName(request.getParameter("productName"));
-        product.setPrice(Double.parseDouble(request.getParameter("productPrice")));
+    public void createProduct(Product product) {
         dbService.addProduct(product);
+    }
+
+    public void setDbService(DbService dbService) {
+        this.dbService = dbService;
     }
 }

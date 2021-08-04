@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Product list</title>
+</head>
+    <body>
+        <table>
+            <tr>
+                <#assign fieldNames = ["id", "name", "price", "date"]>
+                <#list fieldNames as fieldName>
+                <th>${fieldName}</th>
+                </#list>
+            </tr>
+            <#list products as product>
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.date}</td>
+                </tr>
+            </#list>
+        </table>
+    </body>
+</html>

@@ -10,72 +10,51 @@ import java.util.List;
 public class DbService {
 
     private static final String GET_ALL_PRODUCTS_QUERY = "SELECT * FROM products;";
-    private static final String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS products (" +
-            "id SERIAL PRIMARY KEY, " +
-            "name VARCHAR(255), " +
-            "price REAL, " +
-            "creation_date timestamp);";
-
-    private static DbService dbServiceInstance;
-    private Connection connection;
     private SettingsLoader settingsLoader;
 
-    public static DbService getDbServiceInstance() {
-        if (dbServiceInstance == null) {
-            dbServiceInstance = new DbService();
+    private Connection getConnection() {
+        try (Connection connection =  DriverManager.getConnection(settingsLoader.getUrl(),
+                settingsLoader.getUser(), settingsLoader.getPassword())) {
+            return connection;
         }
-        return dbServiceInstance;
-    }
-
-    private DbService() {
-        settingsLoader = new SettingsLoader("config.properties");
-        try {
-            connection = DriverManager.getConnection(settingsLoader.getUrl(),
-                    settingsLoader.getUser(), settingsLoader.getPassword());
-            createTable();
-        } catch (SQLException exception) {
+        catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
     }
 
-    public void createTable() {
-        try {
-            connection.createStatement().executeUpdate(CREATE_TABLE_QUERY);
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
+    public DbService(SettingsLoader settingsLoader) {
+        this.settingsLoader = settingsLoader;
     }
 
     public List<Product> getAllProducts() {
 
         List<Product> result = new ArrayList<>();
 
-        try (ResultSet resultSet = connection.createStatement().executeQuery(GET_ALL_PRODUCTS_QUERY)) {
+        try (ResultSet resultSet = getConnection().createStatement().executeQuery(GET_ALL_PRODUCTS_QUERY)) {
             while (resultSet.next()) {
                 result.add(new Product(resultSet.getInt("id"), resultSet.getString("name"),
                         resultSet.getDouble("price"), resultSet.getDate("creation_date")));
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throw new RuntimeException(throwables);
         }
-
         return result;
     }
 
     public void addProduct(Product product) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(
                 "INSERT INTO products(name, price, creation_date) VALUES (?, ?, ?);")) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setDate(3, new java.sql.Date(System.currentTimeMillis()));
+            preparedStatement.setDate(3, new Date(System.currentTimeMillis()));
             preparedStatement.execute();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw new RuntimeException(exception);
         }
     }
 
     public void updateProduct(Product product) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(
                 "UPDATE products SET name = ?, price = ?, creation_date = ? WHERE id = ?")) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
@@ -83,17 +62,17 @@ public class DbService {
             preparedStatement.setDouble(4, product.getId());
             preparedStatement.execute();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw new RuntimeException(exception);
         }
     }
 
     public void removeProduct(long id) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(
                 "DELETE FROM products WHERE id = ?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw new RuntimeException(exception);
         }
     }
 }
