@@ -19,6 +19,12 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>4.0.3</version>
+
+                <configuration>
+                    <schemas>
+                        <schema>V1_1_0__create_table.sql</schema>
+                    </schemas>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -50,6 +56,11 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.20</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.flywaydb</groupId>-->
+<!--            <artifactId>flyway-maven-plugin</artifactId>-->
+<!--            <version>7.12.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

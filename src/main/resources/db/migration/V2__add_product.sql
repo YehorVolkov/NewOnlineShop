@@ -1,0 +1,1 @@
+INSERT INTO products(name, price, creation_date) VALUES ('pen', 12.99, '12.08.2021');

@@ -12,14 +12,16 @@ public class DbService {
     private static final String GET_ALL_PRODUCTS_QUERY = "SELECT * FROM products;";
     private SettingsLoader settingsLoader;
 
-    private Connection getConnection() {
-        try (Connection connection =  DriverManager.getConnection(settingsLoader.getUrl(),
-                settingsLoader.getUser(), settingsLoader.getPassword())) {
-            return connection;
-        }
-        catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
+    private Connection getConnection() throws SQLException {
+//        try (Connection connection =  DriverManager.getConnection(settingsLoader.getUrl(),
+//                settingsLoader.getUser(), settingsLoader.getPassword())) {
+//            return connection;
+//        }
+//        catch (SQLException exception) {
+//            throw new RuntimeException(exception);
+//        }
+        return DriverManager.getConnection(settingsLoader.getUrl(),
+                settingsLoader.getUser(), settingsLoader.getPassword());
     }
 
     public DbService(SettingsLoader settingsLoader) {
