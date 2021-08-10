@@ -1,20 +1,17 @@
 package com.iryna.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Builder
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     private long id;
     private String name;
     private double price;
-    private Date date;
+    private Timestamp timestamp;
 }

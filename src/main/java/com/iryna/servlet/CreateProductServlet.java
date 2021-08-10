@@ -1,25 +1,28 @@
-package com.iryna.controller;
+package com.iryna.servlet;
 
 import com.iryna.creator.HtmlResponseCreator;
 import com.iryna.entity.Product;
-import com.iryna.service.AddProductService;
+import com.iryna.service.ProductService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class CreateServlet extends HttpServlet {
+public class CreateProductServlet extends HttpServlet {
 
-    private AddProductService createService;
+    private ProductService productService;
 
-    public CreateServlet(AddProductService createService) {
-        this.createService = createService;
+    public CreateProductServlet(ProductService productService) {
+        this.productService = productService;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
-            response.getWriter().write(HtmlResponseCreator.getPageForAddProduct());
+            Map<String, Object> data = new HashMap<>();
+            response.getWriter().write(HtmlResponseCreator.getTemplate(data, "/add_product_page.html"));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -30,6 +33,11 @@ public class CreateServlet extends HttpServlet {
         product.setName(request.getParameter("productName"));
         product.setPrice(Double.parseDouble(request.getParameter("productPrice")));
 
-        createService.createProduct(product);
+        productService.createProduct(product);
+        try {
+            response.sendRedirect("/products");
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 }
