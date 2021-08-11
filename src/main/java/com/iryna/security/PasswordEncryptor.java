@@ -1,4 +1,4 @@
-package com.iryna.util;
+package com.iryna.security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

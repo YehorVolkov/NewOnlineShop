@@ -19,25 +19,19 @@ public class CreateProductServlet extends HttpServlet {
         this.productService = productService;
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Map<String, Object> data = new HashMap<>();
-            response.getWriter().write(HtmlResponseCreator.getTemplate(data, "/add_product_page.html"));
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        Map<String, Object> data = new HashMap<>();
+        response.getWriter().write(HtmlResponseCreator.getTemplate(data, "/add_product_page.html"));
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Product product = new Product();
         product.setName(request.getParameter("productName"));
         product.setPrice(Double.parseDouble(request.getParameter("productPrice")));
 
         productService.createProduct(product);
-        try {
-            response.sendRedirect("/products");
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+
+        response.sendRedirect("/products");
     }
 }

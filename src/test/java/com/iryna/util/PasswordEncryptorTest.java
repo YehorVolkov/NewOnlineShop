@@ -1,5 +1,6 @@
 package com.iryna.util;
 
+import com.iryna.security.PasswordEncryptor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

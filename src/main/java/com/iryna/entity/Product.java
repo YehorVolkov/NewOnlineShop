@@ -2,7 +2,7 @@ package com.iryna.entity;
 
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -13,5 +13,5 @@ public class Product {
     private long id;
     private String name;
     private double price;
-    private Timestamp timestamp;
+    private LocalDateTime creationDate;
 }

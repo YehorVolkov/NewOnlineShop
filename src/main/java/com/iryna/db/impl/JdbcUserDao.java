@@ -1,25 +1,25 @@
 package com.iryna.db.impl;
 
-import com.iryna.db.ConnectionFactory;
 import com.iryna.db.UserDao;
 import com.iryna.entity.User;
-import com.iryna.util.PasswordEncryptor;
+import com.iryna.security.PasswordEncryptor;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class JdbcUserDao implements UserDao {
 
-    private ConnectionFactory connectionFactory;
+    private DataSource dataSource;
 
-    public JdbcUserDao(ConnectionFactory connectionFactory) {
-        this.connectionFactory = connectionFactory;
+    public JdbcUserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public void addUser(User user) {
-        try (Connection connection = connectionFactory.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "INSERT INTO users(name, encrypted_password) VALUES (?, ?);")) {
             preparedStatement.setString(1, user.getUserName());

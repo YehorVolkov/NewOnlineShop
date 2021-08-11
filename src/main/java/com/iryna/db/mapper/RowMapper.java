@@ -4,20 +4,20 @@ import com.iryna.entity.Product;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class RowMapper {
     public Product mapRow(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("id");
         String name = resultSet.getString("name");
         double price = resultSet.getDouble("price");
-        Timestamp timestamp = resultSet.getTimestamp("creation_date");
+        LocalDateTime localDateTime = resultSet.getTimestamp("creation_date").toLocalDateTime();
 
         return Product.builder()
                 .id(id)
                 .name(name)
                 .price(price)
-                .timestamp(timestamp)
+                .creationDate(localDateTime)
                 .build();
     }
 }

@@ -1,45 +1,32 @@
 package com.iryna.servlet;
 
 import com.iryna.entity.Product;
+import com.iryna.security.SecurityService;
 import com.iryna.service.ProductService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.List;
+import java.time.LocalDateTime;
 
 public class EditProductsListServlet extends HttpServlet {
 
     private ProductService productService;
-    private List<String> sessionList;
+    private SecurityService securityService;
 
-    public EditProductsListServlet(ProductService productService, List<String> sessionList) {
+    public EditProductsListServlet(ProductService productService, SecurityService securityService) {
         this.productService = productService;
-        this.sessionList = sessionList;
+        this.securityService = securityService;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        boolean isValid = false;
-        Cookie[] cookies = req.getCookies();
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("user-token")) {
-                    if (sessionList.contains(cookie.getValue())) {
-                        isValid = true;
-                    }
-                }
-            }
-        }
-        if (!isValid) {
+        if (securityService.isTokenExist(req.getCookies())) {
             resp.sendRedirect("/login");
         }
-
         resp.setContentType("text/html;charset=utf-8");
         productService.getAllProductsForEdit(resp.getWriter());
     }
@@ -51,7 +38,7 @@ public class EditProductsListServlet extends HttpServlet {
                 .id(Long.parseLong(req.getParameter("productId")))
                 .name(req.getParameter("productName"))
                 .price(Double.parseDouble(req.getParameter("productPrice")))
-                .timestamp(new Timestamp(Long.parseLong(req.getParameter("creationDate"))))
+                .creationDate(LocalDateTime.now())
                 .build());
     }
 
