@@ -1,27 +1,23 @@
 package com.iryna.service;
 
-import com.iryna.creator.HtmlResponseCreator;
 import com.iryna.db.impl.JdbcProductDao;
 import com.iryna.entity.Product;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductService {
 
     private JdbcProductDao dbService;
 
-    public void getAllProducts(PrintWriter printWriter) {
-        Map<String, Object> templateData = new HashMap<>();
-        templateData.put("products", dbService.findAll());
-        printWriter.println(HtmlResponseCreator.getTemplate(templateData, "/product_list.html"));
+    public List<Product> findAll() {
+        return dbService.findAll();
     }
 
-    public void getAllProductsForEdit(PrintWriter printWriter) {
-        Map<String, Object> templateData = new HashMap<>();
-        templateData.put("products", dbService.findAll());
-        printWriter.println(HtmlResponseCreator.getTemplate(templateData, "/edit_product_list.html"));
+    public List<Product> getSearchedProducts(String searchedWord) {
+        List<Product> products = findAll();
+        return products.stream().filter(product -> product.getProductDescription().contains(searchedWord) ||
+                product.getName().contains(searchedWord)).collect(Collectors.toList());
     }
 
     public void updateProduct(Product product) {

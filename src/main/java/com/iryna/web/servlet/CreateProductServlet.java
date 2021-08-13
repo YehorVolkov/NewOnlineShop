@@ -1,4 +1,4 @@
-package com.iryna.servlet;
+package com.iryna.web.servlet;
 
 import com.iryna.creator.HtmlResponseCreator;
 import com.iryna.entity.Product;
@@ -28,6 +28,7 @@ public class CreateProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Product product = new Product();
         product.setName(request.getParameter("productName"));
+        product.setProductDescription(request.getParameter("productDescription"));
         product.setPrice(Double.parseDouble(request.getParameter("productPrice")));
 
         productService.createProduct(product);

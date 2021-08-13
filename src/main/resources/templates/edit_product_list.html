@@ -35,7 +35,7 @@
 <div class="container">
     <table class="table table-striped table-hover">
         <tr>
-            <#assign fieldNames = ["id", "name", "price", "date"]>
+            <#assign fieldNames = ["id", "name", "price", "description", "date"]>
             <#list fieldNames as fieldName>
             <th>${fieldName}</th>
         </#list>
@@ -45,6 +45,7 @@
             <td>${product.id}</td>
             <td>${product.name}</td>
             <td>${product.price}</td>
+            <td>${product.productDescription}</td>
             <td>${product.creationDate}</td>
             <td>
                 <form action="/product" method="GET"><input type="hidden" name="id" value="${product.id}"/>

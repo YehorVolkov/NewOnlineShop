@@ -11,6 +11,7 @@ public class RowMapper {
         long id = resultSet.getLong("id");
         String name = resultSet.getString("name");
         double price = resultSet.getDouble("price");
+        String productDescription = resultSet.getString("product_description");
         LocalDateTime localDateTime = resultSet.getTimestamp("creation_date").toLocalDateTime();
 
         return Product.builder()
@@ -18,6 +19,7 @@ public class RowMapper {
                 .name(name)
                 .price(price)
                 .creationDate(localDateTime)
+                .productDescription(productDescription)
                 .build();
     }
 }

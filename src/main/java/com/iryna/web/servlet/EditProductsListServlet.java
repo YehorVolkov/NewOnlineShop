@@ -1,34 +1,32 @@
-package com.iryna.servlet;
+package com.iryna.web.servlet;
 
+import com.iryna.creator.HtmlResponseCreator;
 import com.iryna.entity.Product;
-import com.iryna.security.SecurityService;
 import com.iryna.service.ProductService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditProductsListServlet extends HttpServlet {
 
     private ProductService productService;
-    private SecurityService securityService;
 
-    public EditProductsListServlet(ProductService productService, SecurityService securityService) {
+    public EditProductsListServlet(ProductService productService) {
         this.productService = productService;
-        this.securityService = securityService;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        if (securityService.isTokenExist(req.getCookies())) {
-            resp.sendRedirect("/login");
-        }
         resp.setContentType("text/html;charset=utf-8");
-        productService.getAllProductsForEdit(resp.getWriter());
+        Map<String, Object> templateData = new HashMap<>();
+        templateData.put("products", productService.findAll());
+        resp.getWriter().println(HtmlResponseCreator.getTemplate(templateData, "/edit_product_list.html"));
     }
 
     @Override
@@ -38,6 +36,7 @@ public class EditProductsListServlet extends HttpServlet {
                 .id(Long.parseLong(req.getParameter("productId")))
                 .name(req.getParameter("productName"))
                 .price(Double.parseDouble(req.getParameter("productPrice")))
+                .productDescription(String.valueOf(req.getParameter("productDescription")))
                 .creationDate(LocalDateTime.now())
                 .build());
     }

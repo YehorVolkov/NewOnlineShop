@@ -38,10 +38,11 @@ public class JdbcProductDao implements ProductDao {
     public void addProduct(Product product) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO products(name, price, creation_date) VALUES (?, ?, ?);")) {
+                     "INSERT INTO products(name, price, product_description, creation_date) VALUES (?, ?, ?, ?);")) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(3, product.getProductDescription());
+            preparedStatement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             preparedStatement.execute();
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
@@ -51,11 +52,12 @@ public class JdbcProductDao implements ProductDao {
     public void updateProduct(Product product) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "UPDATE products SET name = ?, price = ?, creation_date = ? WHERE id = ?")) {
+                     "UPDATE products SET name = ?, price = ?, creation_date = ?, product_description = ? WHERE id = ?")) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getCreationDate()));
-            preparedStatement.setDouble(4, product.getId());
+            preparedStatement.setString(3, product.getProductDescription());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(product.getCreationDate()));
+            preparedStatement.setDouble(5, product.getId());
             preparedStatement.execute();
         } catch (SQLException exception) {
             throw new RuntimeException(exception);

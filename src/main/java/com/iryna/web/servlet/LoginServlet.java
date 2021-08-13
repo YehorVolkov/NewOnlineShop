@@ -1,4 +1,4 @@
-package com.iryna.servlet;
+package com.iryna.web.servlet;
 
 import com.iryna.creator.HtmlResponseCreator;
 import com.iryna.entity.User;
@@ -14,12 +14,12 @@ import java.util.Map;
 
 public class LoginServlet extends HttpServlet {
 
-    private UserService loginService;
+    private UserService userService;
     private SecurityService securityService;
 
-    public LoginServlet(UserService loginService, SecurityService securityService) {
+    public LoginServlet(UserService userService, SecurityService securityService) {
         this.securityService = securityService;
-        this.loginService = loginService;
+        this.userService = userService;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        loginService.createUser(User.builder().
+        userService.createUser(User.builder().
                 userName(request.getParameter("name")).
                 password(request.getParameter("password")).
                 build());
