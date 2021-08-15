@@ -22,7 +22,7 @@ public class CreateProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Map<String, Object> data = new HashMap<>();
-        response.getWriter().write(HtmlResponseCreator.getTemplate(data, "/add_product_page.html"));
+        response.getWriter().write(HtmlResponseCreator.generatePage(data, "/add_product_page.html"));
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

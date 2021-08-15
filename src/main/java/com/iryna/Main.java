@@ -1,9 +1,8 @@
 package com.iryna;
 
 import com.iryna.db.impl.JdbcUserDao;
-import com.iryna.security.SecurityService;
 import com.iryna.service.UserService;
-import com.iryna.web.SecurityFilter;
+import com.iryna.web.filter.SecurityFilter;
 import com.iryna.web.servlet.LoginServlet;
 import com.iryna.web.servlet.EditProductsListServlet;
 import com.iryna.web.servlet.CreateProductServlet;
@@ -35,27 +34,27 @@ public class Main {
         JdbcUserDao jdbcUserDao = new JdbcUserDao(pgSimpleDataSource);
 
         // Service
-        UserService userService = new UserService();
+        UserService userService = new UserService(new ArrayList<>());
         ProductService productService = new ProductService();
-        SecurityService securityService = new SecurityService(new ArrayList<>());
 
         userService.setJdbcUserDao(jdbcUserDao);
-        productService.setDbService(jdbcProductDao);
+        productService.setProductDao(jdbcProductDao);
 
         // Servlet
         CreateProductServlet createServlet = new CreateProductServlet(productService);
         EditProductsListServlet editProductsListServlet = new EditProductsListServlet(productService);
         ProductListServlet productListServlet = new ProductListServlet(productService);
-        LoginServlet loginServlet = new LoginServlet(userService, securityService);
+        LoginServlet loginServlet = new LoginServlet(userService);
 
-        SecurityFilter securityFilter = new SecurityFilter(securityService);
+        SecurityFilter securityFilter = new SecurityFilter(userService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(editProductsListServlet), "/products/editor");
         context.addServlet(new ServletHolder(productListServlet), "/products");
         context.addServlet(new ServletHolder(createServlet), "/create");
         context.addServlet(new ServletHolder(loginServlet), "/login");
-        context.addFilter(new FilterHolder(securityFilter), "/products", EnumSet.of(DispatcherType.REQUEST));
+
+        context.addFilter(new FilterHolder(securityFilter), "/*", EnumSet.of(DispatcherType.REQUEST));
 
         Server server = new Server(8080);
         server.setHandler(context);

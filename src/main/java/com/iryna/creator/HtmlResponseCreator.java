@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class HtmlResponseCreator {
 
-    public static String getTemplate(Map<String, Object> templateData, String path) {
+    public static String generatePage(Map<String, Object> templateData, String path) {
         Writer stream = new StringWriter();
         try {
             Configuration configuration = new Configuration();

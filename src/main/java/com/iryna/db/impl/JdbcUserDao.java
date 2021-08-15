@@ -2,12 +2,9 @@ package com.iryna.db.impl;
 
 import com.iryna.db.UserDao;
 import com.iryna.entity.User;
-import com.iryna.security.PasswordEncryptor;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class JdbcUserDao implements UserDao {
 
@@ -18,20 +15,24 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void addUser(User user) {
+    public User getUserByName(String name) {
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO users(name, encrypted_password) VALUES (?, ?);")) {
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, PasswordEncryptor.encryptPassword(user.getPassword()));
-            preparedStatement.execute();
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+                     "SELECT encrypted_password FROM users WHERE name = ?;")) {
+            preparedStatement.setString(1, name);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                User user = null;
+                while (resultSet.next()) {
+                    user = User.builder()
+                            .userName(name)
+                            .password(resultSet.getString("encrypted_password"))
+                            .build();
+                }
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throw new RuntimeException(throwables);
         }
-    }
-
-    @Override
-    public User getUserByName(String name) {
-        return null;
     }
 }

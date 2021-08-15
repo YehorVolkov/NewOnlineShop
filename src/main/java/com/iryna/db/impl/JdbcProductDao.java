@@ -1,7 +1,7 @@
 package com.iryna.db.impl;
 
 import com.iryna.db.ProductDao;
-import com.iryna.db.mapper.RowMapper;
+import com.iryna.db.mapper.ProductRowMapper;
 import com.iryna.entity.Product;
 
 import javax.sql.DataSource;
@@ -12,7 +12,7 @@ import java.util.List;
 public class JdbcProductDao implements ProductDao {
 
     private static final String GET_ALL_PRODUCTS_QUERY = "SELECT * FROM products;";
-    private static final RowMapper ROW_MAPPER = new RowMapper();
+    private static final ProductRowMapper ROW_MAPPER = new ProductRowMapper();
     private DataSource dataSource;
 
     public JdbcProductDao(DataSource dataSource) {
@@ -65,7 +65,6 @@ public class JdbcProductDao implements ProductDao {
     }
 
     public void removeProduct(long id) {
-        System.out.println("remove");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "DELETE FROM products WHERE id = ?")) {

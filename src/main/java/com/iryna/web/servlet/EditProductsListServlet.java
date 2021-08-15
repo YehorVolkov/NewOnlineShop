@@ -26,7 +26,7 @@ public class EditProductsListServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productService.findAll());
-        resp.getWriter().println(HtmlResponseCreator.getTemplate(templateData, "/edit_product_list.html"));
+        resp.getWriter().println(HtmlResponseCreator.generatePage(templateData, "/edit_product_list.html"));
     }
 
     @Override

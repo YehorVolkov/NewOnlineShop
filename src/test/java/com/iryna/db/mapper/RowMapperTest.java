@@ -17,7 +17,7 @@ class RowMapperTest {
 
     @Test
     void mapRow() throws SQLException {
-        RowMapper rowMapper = new RowMapper();
+        ProductRowMapper rowMapper = new ProductRowMapper();
         ResultSet resultSet = mock(ResultSet.class);
         LocalDateTime localDateTime = LocalDateTime.now();
 

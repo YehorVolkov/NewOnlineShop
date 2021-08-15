@@ -14,17 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HtmlResponseCreatorTest {
 
-    @DisplayName("return Table Of Products")
+    @DisplayName("generate product page")
     @Test
     void returnTableOfProducts() {
 
         LocalDateTime localDateTime = LocalDateTime.now();
-        List products = new ArrayList<Product>();
+        List<Product> products = new ArrayList<>();
         products.add(Product.builder().id(1).creationDate(localDateTime).name("pen").price(98.00).build());
         products.add(Product.builder().id(2).creationDate(localDateTime).name("pencil").price(98.00).build());
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", products);
-        String response = HtmlResponseCreator.getTemplate(templateData, "/products_list.html");
+        String response = HtmlResponseCreator.generatePage(templateData, "/products_list.html");
         assertNotNull(response);
     }
 }

@@ -1,38 +1,39 @@
 package com.iryna.service;
 
-import com.iryna.db.impl.JdbcProductDao;
+import com.iryna.db.ProductDao;
 import com.iryna.entity.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductService {
 
-    private JdbcProductDao dbService;
+    private ProductDao productDao;
 
-    public List<Product> findAll() {
-        return dbService.findAll();
+    public Iterable<Product> findAll() {
+        return productDao.findAll();
     }
 
-    public List<Product> getSearchedProducts(String searchedWord) {
-        List<Product> products = findAll();
-        return products.stream().filter(product -> product.getProductDescription().contains(searchedWord) ||
+    public Iterable<Product> getSearchedProducts(String searchedWord) {
+        Iterable<Product> products = findAll();
+        return ((List<Product>) products).stream().filter(product -> product.getProductDescription().contains(searchedWord) ||
                 product.getName().contains(searchedWord)).collect(Collectors.toList());
     }
 
     public void updateProduct(Product product) {
-        dbService.updateProduct(product);
+        productDao.updateProduct(product);
     }
 
     public void removeProduct(Long productId) {
-        dbService.removeProduct(productId);
+        productDao.removeProduct(productId);
     }
 
     public void createProduct(Product product) {
-        dbService.addProduct(product);
+        productDao.addProduct(product);
     }
 
-    public void setDbService(JdbcProductDao dbService) {
-        this.dbService = dbService;
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
     }
 }

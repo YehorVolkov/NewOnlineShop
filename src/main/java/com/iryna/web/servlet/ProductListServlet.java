@@ -24,7 +24,7 @@ public class ProductListServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productService.findAll());
-        resp.getWriter().println(HtmlResponseCreator.getTemplate(templateData, "/product_list.html"));
+        resp.getWriter().println(HtmlResponseCreator.generatePage(templateData, "/product_list.html"));
     }
 
     @Override
@@ -33,6 +33,6 @@ public class ProductListServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productService.getSearchedProducts(req.getParameter("searchingProduct")));
-        resp.getWriter().println(HtmlResponseCreator.getTemplate(templateData, "/product_list.html"));
+        resp.getWriter().println(HtmlResponseCreator.generatePage(templateData, "/product_list.html"));
     }
 }
