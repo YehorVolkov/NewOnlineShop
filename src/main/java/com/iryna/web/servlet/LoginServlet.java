@@ -1,6 +1,7 @@
 package com.iryna.web.servlet;
 
-import com.iryna.creator.HtmlResponseCreator;
+import com.iryna.creator.HtmlCreator;
+import com.iryna.service.SecurityService;
 import com.iryna.service.UserService;
 
 import javax.servlet.http.Cookie;
@@ -13,21 +14,21 @@ import java.util.Map;
 
 public class LoginServlet extends HttpServlet {
 
-    private UserService userService;
+    private SecurityService securityService;
 
-    public LoginServlet(UserService userService) {
-        this.userService = userService;
+    public LoginServlet(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Map<String, Object> data = new HashMap<>();
-        response.getWriter().write(HtmlResponseCreator.generatePage(data, "/login.html"));
+        response.getWriter().write(HtmlCreator.generatePage(data, "/login.html"));
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (userService.checkPassword(request.getParameter("name"), request.getParameter("password"))) {
-            response.addCookie(new Cookie("user-token", userService.generateToken()));
+        if (securityService.checkPassword(request.getParameter("name"), request.getParameter("password"))) {
+            response.addCookie(new Cookie("user-token", securityService.generateToken()));
             response.sendRedirect("/products/editor");
         }
     }

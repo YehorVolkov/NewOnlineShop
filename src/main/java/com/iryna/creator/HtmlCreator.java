@@ -9,13 +9,13 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 
-public class HtmlResponseCreator {
+public class HtmlCreator {
 
     public static String generatePage(Map<String, Object> templateData, String path) {
         Writer stream = new StringWriter();
         try {
             Configuration configuration = new Configuration();
-            configuration.setClassForTemplateLoading(HtmlResponseCreator.class, "/templates/");
+            configuration.setClassForTemplateLoading(HtmlCreator.class, "/templates/");
             Template template = configuration.getTemplate(path);
             template.process(templateData, stream);
         } catch (IOException | TemplateException e) {

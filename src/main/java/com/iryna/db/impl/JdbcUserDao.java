@@ -19,13 +19,14 @@ public class JdbcUserDao implements UserDao {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT encrypted_password FROM users WHERE name = ?;")) {
+                     "SELECT encrypted_password, generated_salt FROM users WHERE name = ?;")) {
             preparedStatement.setString(1, name);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 User user = null;
                 while (resultSet.next()) {
                     user = User.builder()
                             .userName(name)
+                            .generatedSalt(resultSet.getString("generated_salt"))
                             .password(resultSet.getString("encrypted_password"))
                             .build();
                 }

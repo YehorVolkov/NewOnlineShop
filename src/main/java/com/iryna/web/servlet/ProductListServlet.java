@@ -1,6 +1,6 @@
 package com.iryna.web.servlet;
 
-import com.iryna.creator.HtmlResponseCreator;
+import com.iryna.creator.HtmlCreator;
 import com.iryna.service.ProductService;
 
 import javax.servlet.http.HttpServlet;
@@ -24,7 +24,7 @@ public class ProductListServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productService.findAll());
-        resp.getWriter().println(HtmlResponseCreator.generatePage(templateData, "/product_list.html"));
+        resp.getWriter().println(HtmlCreator.generatePage(templateData, "/product_list.html"));
     }
 
     @Override
@@ -33,6 +33,6 @@ public class ProductListServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productService.getSearchedProducts(req.getParameter("searchingProduct")));
-        resp.getWriter().println(HtmlResponseCreator.generatePage(templateData, "/product_list.html"));
+        resp.getWriter().println(HtmlCreator.generatePage(templateData, "/product_list.html"));
     }
 }

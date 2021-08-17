@@ -1,6 +1,6 @@
 package com.iryna.web.servlet;
 
-import com.iryna.creator.HtmlResponseCreator;
+import com.iryna.creator.HtmlCreator;
 import com.iryna.entity.Product;
 import com.iryna.service.ProductService;
 
@@ -26,7 +26,7 @@ public class EditProductsListServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productService.findAll());
-        resp.getWriter().println(HtmlResponseCreator.generatePage(templateData, "/edit_product_list.html"));
+        resp.getWriter().println(HtmlCreator.generatePage(templateData, "/edit_product_list.html"));
     }
 
     @Override

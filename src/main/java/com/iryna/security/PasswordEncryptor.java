@@ -15,12 +15,15 @@ public class PasswordEncryptor {
             " She liked to pretend that her ball was indeed the sun and that the whole" +
             " wide world was hers to play with.";
 
-    public static String encryptPassword(String password) {
+    public static String encryptPassword(String password, String generatedSalt) {
 
-        password += SALT;
+        StringBuilder passwordStringBuilder = new StringBuilder();
+        passwordStringBuilder.append(generatedSalt);
+        passwordStringBuilder.append(password);
+        passwordStringBuilder.append(SALT);
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            final byte[] hash = messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
+            final byte[] hash = messageDigest.digest(passwordStringBuilder.toString().getBytes(StandardCharsets.UTF_8));
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < hash.length; i++) {
                 stringBuilder.append(String.valueOf(hash[i]));

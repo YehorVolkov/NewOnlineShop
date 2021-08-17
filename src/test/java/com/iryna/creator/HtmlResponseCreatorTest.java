@@ -24,7 +24,7 @@ class HtmlResponseCreatorTest {
         products.add(Product.builder().id(2).creationDate(localDateTime).name("pencil").price(98.00).build());
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", products);
-        String response = HtmlResponseCreator.generatePage(templateData, "/products_list.html");
+        String response = HtmlCreator.generatePage(templateData, "/products_list.html");
         assertNotNull(response);
     }
 }

@@ -1,6 +1,7 @@
 package com.iryna;
 
 import com.iryna.db.impl.JdbcUserDao;
+import com.iryna.service.SecurityService;
 import com.iryna.service.UserService;
 import com.iryna.web.filter.SecurityFilter;
 import com.iryna.web.servlet.LoginServlet;
@@ -34,9 +35,11 @@ public class Main {
         JdbcUserDao jdbcUserDao = new JdbcUserDao(pgSimpleDataSource);
 
         // Service
-        UserService userService = new UserService(new ArrayList<>());
+        UserService userService = new UserService();
+        SecurityService securityService = new SecurityService(new ArrayList<>());
         ProductService productService = new ProductService();
 
+        securityService.setUserService(userService);
         userService.setJdbcUserDao(jdbcUserDao);
         productService.setProductDao(jdbcProductDao);
 
@@ -44,9 +47,9 @@ public class Main {
         CreateProductServlet createServlet = new CreateProductServlet(productService);
         EditProductsListServlet editProductsListServlet = new EditProductsListServlet(productService);
         ProductListServlet productListServlet = new ProductListServlet(productService);
-        LoginServlet loginServlet = new LoginServlet(userService);
+        LoginServlet loginServlet = new LoginServlet(securityService);
 
-        SecurityFilter securityFilter = new SecurityFilter(userService);
+        SecurityFilter securityFilter = new SecurityFilter(securityService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(editProductsListServlet), "/products/editor");

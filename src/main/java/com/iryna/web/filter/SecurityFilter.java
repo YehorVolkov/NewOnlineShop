@@ -1,5 +1,6 @@
 package com.iryna.web.filter;
 
+import com.iryna.service.SecurityService;
 import com.iryna.service.UserService;
 
 import javax.servlet.*;
@@ -10,10 +11,10 @@ import java.io.IOException;
 
 public class SecurityFilter implements Filter {
 
-    private UserService userService;
+    private SecurityService securityService;
 
-    public SecurityFilter(UserService userService) {
-        this.userService = userService;
+    public SecurityFilter(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class SecurityFilter implements Filter {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
-                    if (userService.isTokenExist(cookie.getValue())) {
+                    if (securityService.isTokenExist(cookie.getValue())) {
                         filterChain.doFilter(servletRequest, servletResponse);
                         return;
                     }
