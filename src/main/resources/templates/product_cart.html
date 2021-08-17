@@ -27,50 +27,42 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/products/editor">Edit product list</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart">Chart</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
+
+</div>
 <body>
 <div class="container">
-    <table class="table table-striped table-hover">
-        <tr>
-            <#assign fieldNames = ["id", "name", "price", "description", "date"]>
-            <#list fieldNames as fieldName>
-            <th>${fieldName}</th>
+    <div class="input-group rounded">
+        <table class="table table-striped table-hover">
+            <tr>
+                <#assign fieldNames = ["id", "name", "price", "description", "date"]>
+                <#list fieldNames as fieldName>
+                <th>${fieldName}</th>
+            </#list>
+            </tr>
+            <#list products as product>
+            <tr>
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td>${product.productDescription}</td>
+                <td>${product.creationDate}</td>
+                <td>
+                    <form action="/cart" method="POST">
+                        <input type="hidden" name="id" value="${product.id}"/>
+                        <input type="hidden" name="method" value="delete"/>
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
         </#list>
-        </tr>
-        <#list products as product>
-        <tr>
-            <td>${product.id}</td>
-            <td>${product.name}</td>
-            <td>${product.price}</td>
-            <td>${product.productDescription}</td>
-            <td>${product.creationDate}</td>
-            <td>
-                <form action="/product" method="GET"><input type="hidden" name="id" value="${product.id}"/>
-                    <button type="submit">Edit</button>
-                </form>
-            </td>
-            <td>
-                <form action="/products/editor" method="POST">
-                    <input type="hidden" name="id" value="${product.id}"/>
-                    <input type="hidden" name="method" value="DELETE"/>
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-    </#list>
-    </table>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-            crossorigin="anonymous"></script>
-</div>
+        </table>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+                crossorigin="anonymous"></script>
+    </div>
 </body>
 </html>

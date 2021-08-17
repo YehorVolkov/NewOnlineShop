@@ -32,7 +32,7 @@ public class SecurityFilter implements Filter {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
-                    if (securityService.isTokenExist(cookie.getValue())) {
+                    if (securityService.isTokenValid(cookie.getValue())) {
                         filterChain.doFilter(servletRequest, servletResponse);
                         return;
                     }

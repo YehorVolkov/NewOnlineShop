@@ -3,9 +3,11 @@ package com.iryna.db.impl;
 import com.iryna.db.ProductDao;
 import com.iryna.db.mapper.ProductRowMapper;
 import com.iryna.entity.Product;
+import com.iryna.entity.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,30 @@ public class JdbcProductDao implements ProductDao {
             throw new RuntimeException(throwables);
         }
         return result;
+    }
+
+    @Override
+    public Product findById(int id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT name, product_description, price, creation_date FROM products WHERE id = ?;")) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                Product product = null;
+                while (resultSet.next()) {
+                    product = Product.builder()
+                            .id(id)
+                            .name(resultSet.getString("name"))
+                            .price(resultSet.getDouble("price"))
+                            .creationDate(resultSet.getTimestamp("creation_date").toLocalDateTime())
+                            .productDescription(resultSet.getString("product_description"))
+                            .build();
+                }
+                return product;
+            }
+        } catch (SQLException throwables) {
+            throw new RuntimeException(throwables);
+        }
     }
 
     public void addProduct(Product product) {

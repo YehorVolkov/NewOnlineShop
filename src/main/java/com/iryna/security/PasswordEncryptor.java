@@ -15,7 +15,7 @@ public class PasswordEncryptor {
             " She liked to pretend that her ball was indeed the sun and that the whole" +
             " wide world was hers to play with.";
 
-    public static String encryptPassword(String password, String generatedSalt) {
+    public String encryptPassword(String password, String generatedSalt) {
 
         StringBuilder passwordStringBuilder = new StringBuilder();
         passwordStringBuilder.append(generatedSalt);

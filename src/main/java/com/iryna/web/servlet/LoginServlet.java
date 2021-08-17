@@ -2,7 +2,6 @@ package com.iryna.web.servlet;
 
 import com.iryna.creator.HtmlCreator;
 import com.iryna.service.SecurityService;
-import com.iryna.service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -27,8 +26,11 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (securityService.checkPassword(request.getParameter("name"), request.getParameter("password"))) {
-            response.addCookie(new Cookie("user-token", securityService.generateToken()));
+        String token = securityService.login(request.getParameter("name"), request.getParameter("password"));
+        if (token != null) {
+            Cookie cookie = new Cookie("user-token", token);
+            cookie.setMaxAge(60*4);
+            response.addCookie(cookie);
             response.sendRedirect("/products/editor");
         }
     }

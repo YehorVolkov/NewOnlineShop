@@ -30,6 +30,16 @@ public class EditProductsListServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        if (req.getParameter("method").equals("DELETE")) {
+            productService.removeProduct(Long.parseLong(req.getParameter("id")));
+        }
+        resp.sendRedirect("/products/editor");
+
+    }
+
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
 
         productService.updateProduct(Product.builder()
@@ -39,10 +49,5 @@ public class EditProductsListServlet extends HttpServlet {
                 .productDescription(String.valueOf(req.getParameter("productDescription")))
                 .creationDate(LocalDateTime.now())
                 .build());
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        productService.removeProduct(Long.parseLong(req.getParameter("id")));
     }
 }

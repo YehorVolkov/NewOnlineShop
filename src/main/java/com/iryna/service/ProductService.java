@@ -14,6 +14,10 @@ public class ProductService {
         return productDao.findAll();
     }
 
+    public Product findById(int id) {
+        return productDao.findById(id);
+    }
+
     public Iterable<Product> getSearchedProducts(String searchedWord) {
         Iterable<Product> products = findAll();
         return StreamSupport.stream(products.spliterator(), false).filter(product -> product.getProductDescription().contains(searchedWord) ||
