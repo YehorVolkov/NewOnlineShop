@@ -1,7 +1,10 @@
 package com.iryna.web.servlet;
 
 import com.iryna.creator.HtmlCreator;
-import com.iryna.service.SecurityService;
+import com.iryna.loader.SettingsLoader;
+import com.iryna.security.SecurityService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +16,9 @@ import java.util.Map;
 
 public class LoginServlet extends HttpServlet {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private SecurityService securityService;
+    private SettingsLoader settingsLoader;
 
     public LoginServlet(SecurityService securityService) {
         this.securityService = securityService;
@@ -29,9 +34,14 @@ public class LoginServlet extends HttpServlet {
         String token = securityService.login(request.getParameter("name"), request.getParameter("password"));
         if (token != null) {
             Cookie cookie = new Cookie("user-token", token);
-            cookie.setMaxAge(60*4);
+            cookie.setMaxAge(settingsLoader.getTimeToLiveSession());
             response.addCookie(cookie);
-            response.sendRedirect("/products/editor");
+            log.info("Login successful");
+            response.sendRedirect("/products");
         }
+    }
+
+    public void setSettingsLoader(SettingsLoader settingsLoader) {
+        this.settingsLoader = settingsLoader;
     }
 }

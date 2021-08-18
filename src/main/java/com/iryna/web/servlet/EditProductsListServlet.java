@@ -35,8 +35,7 @@ public class EditProductsListServlet extends HttpServlet {
         if (req.getParameter("method").equals("DELETE")) {
             productService.removeProduct(Long.parseLong(req.getParameter("id")));
         }
-        resp.sendRedirect("/products/editor");
-
+        resp.sendRedirect("/product/editor");
     }
 
     @Override

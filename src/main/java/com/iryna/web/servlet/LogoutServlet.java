@@ -1,6 +1,6 @@
 package com.iryna.web.servlet;
 
-import com.iryna.service.SecurityService;
+import com.iryna.security.SecurityService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;

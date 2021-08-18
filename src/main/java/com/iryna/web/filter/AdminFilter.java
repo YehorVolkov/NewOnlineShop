@@ -1,40 +1,36 @@
 package com.iryna.web.filter;
 
+import com.iryna.entity.Role;
 import com.iryna.security.SecurityService;
-import com.iryna.security.Session;
 import com.iryna.web.parser.CookieParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SecurityFilter implements Filter {
+public class AdminFilter implements Filter {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private SecurityService securityService;
-
-    public SecurityFilter(SecurityService securityService) {
-        this.securityService = securityService;
-    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
-        String path = httpServletRequest.getRequestURI();
-        if (path.equals("/login")) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
         String token = CookieParser.getTokenFromCookies(httpServletRequest.getCookies());
-        Session session = securityService.getSession(token);
-        if (session != null) {
-            httpServletRequest.setAttribute("session", session);
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
+        log.info("Check if user is authorized");
+        if (token != null) {
+            if (securityService.isAccessAllowForRole(Role.ADMIN, token)) {
+                log.info("Authorized access");
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
         }
+        log.info("Unauthorized access " + httpServletRequest.getRequestURI());
         httpServletResponse.sendRedirect("/login");
     }
 
@@ -46,5 +42,9 @@ public class SecurityFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }

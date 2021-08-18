@@ -19,13 +19,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/products">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/products">Products list</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/create">Add product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/products/editor">Edit product list</a>
+                    <a class="nav-link" href="/product/editor">Edit product list</a>
                 </li>
             </ul>
         </div>
@@ -51,9 +51,8 @@
                 <td>${product.productDescription}</td>
                 <td>${product.creationDate}</td>
                 <td>
-                    <form action="/cart" method="POST">
+                    <form action="/cart/remove" method="POST">
                         <input type="hidden" name="id" value="${product.id}"/>
-                        <input type="hidden" name="method" value="delete"/>
                         <button type="submit">Remove</button>
                     </form>
                 </td>

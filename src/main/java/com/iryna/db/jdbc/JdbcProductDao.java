@@ -1,13 +1,11 @@
-package com.iryna.db.impl;
+package com.iryna.db.jdbc;
 
 import com.iryna.db.ProductDao;
 import com.iryna.db.mapper.ProductRowMapper;
 import com.iryna.entity.Product;
-import com.iryna.entity.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,11 +76,11 @@ public class JdbcProductDao implements ProductDao {
     public void updateProduct(Product product) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "UPDATE products SET name = ?, price = ?, creation_date = ?, product_description = ? WHERE id = ?")) {
+                     "UPDATE products SET name = ?, price = ?, product_description = ?, creation_date = ? WHERE id = ?")) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setString(3, product.getProductDescription());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(product.getCreationDate()));
+            preparedStatement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setDouble(5, product.getId());
             preparedStatement.execute();
         } catch (SQLException exception) {

@@ -3,6 +3,7 @@ package com.iryna.service;
 import com.iryna.entity.Product;
 import com.iryna.entity.User;
 import com.iryna.security.PasswordEncryptor;
+import com.iryna.security.SecurityService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -70,8 +71,8 @@ class SecurityServiceTest {
         Product product1 = Product.builder().id(1).productDescription("desc").name("pr1").build();
         Product product2 = Product.builder().id(2).productDescription("desc2").name("pr2").build();
 
-        securityService.addProductToChart(token, 1);
-        securityService.addProductToChart(token, 2);
+        userService.addProductToChart(token, 1);
+        userService.addProductToChart(token, 2);
         List<Product> products = securityService.getChartByToken(token);
         assertNotNull(products);
         assertEquals(2, products.size());

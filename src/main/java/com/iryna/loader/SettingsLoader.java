@@ -9,6 +9,7 @@ public class SettingsLoader {
     private String url;
     private String user;
     private String password;
+    private int timeToLiveSession;
 
     public SettingsLoader(String path) {
         Properties property = new Properties();
@@ -18,6 +19,7 @@ public class SettingsLoader {
             this.url = property.getProperty("url");
             this.user = property.getProperty("user");
             this.password = property.getProperty("password");
+            this.timeToLiveSession = Integer.parseInt(property.getProperty("timeToLiveSession"));
         } catch (IOException e) {
             throw new RuntimeException("Can't load configuration properties", e);
         }
@@ -33,5 +35,9 @@ public class SettingsLoader {
 
     public String getPassword() {
         return password;
+    }
+
+    public int getTimeToLiveSession() {
+        return timeToLiveSession;
     }
 }

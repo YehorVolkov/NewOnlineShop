@@ -1,6 +1,7 @@
-package com.iryna.db.impl;
+package com.iryna.db.jdbc;
 
 import com.iryna.db.UserDao;
+import com.iryna.entity.Role;
 import com.iryna.entity.User;
 
 import javax.sql.DataSource;
@@ -19,7 +20,7 @@ public class JdbcUserDao implements UserDao {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT encrypted_password, generated_salt FROM users WHERE name = ?;")) {
+                     "SELECT role, encrypted_password, generated_salt FROM users WHERE name = ?;")) {
             preparedStatement.setString(1, name);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 User user = null;
@@ -28,6 +29,7 @@ public class JdbcUserDao implements UserDao {
                             .userName(name)
                             .generatedSalt(resultSet.getString("generated_salt"))
                             .password(resultSet.getString("encrypted_password"))
+                            .role(Role.valueOf(resultSet.getString("role").toUpperCase()))
                             .build();
                 }
                 return user;

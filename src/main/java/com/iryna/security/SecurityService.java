@@ -1,10 +1,10 @@
-package com.iryna.service;
+package com.iryna.security;
 
 import com.iryna.entity.Product;
+import com.iryna.entity.Role;
 import com.iryna.entity.User;
-import com.iryna.security.PasswordEncryptor;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.iryna.loader.SettingsLoader;
+import com.iryna.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,30 +15,36 @@ import java.util.UUID;
 public class SecurityService {
 
     private UserService userService;
-    private ProductService productService;
     private PasswordEncryptor passwordEncryptor;
+    private SettingsLoader settingsLoader;
+
     private HashMap<String, Session> sessionList = new HashMap();
 
-    public void addProductToChart(String token, int productId) {
-        Session session = sessionList.get(token);
-        session.cart.add(productService.findById(productId));
-    }
-
-    public void removeProductFromChart(String token, int productId) {
-        Session session = sessionList.get(token);
-        session.cart.remove(productService.findById(productId));
-    }
-
     public List<Product> getChartByToken(String token) {
-        return sessionList.get(token).cart;
+        return sessionList.get(token).getCart();
+    }
+
+    public Session getSession(String token) {
+        if (token != null) {
+            Session session = sessionList.get(token);
+            if (isTokenValid(token)) {
+                return session;
+            }
+        }
+        return null;
+    }
+
+    public boolean isAccessAllowForRole(Role role, String token) {
+        Session session = sessionList.get(token);
+        return session.getUser().getRole().equals(role);
     }
 
     public boolean isTokenValid(String token) {
         Session session = sessionList.get(token);
-        if(session == null) {
+        if (session == null) {
             return false;
         }
-        if (session.expireDate.isBefore(LocalDateTime.now())) {
+        if (session.getExpireDate().isBefore(LocalDateTime.now())) {
             sessionList.remove(token);
             return false;
         }
@@ -48,7 +54,7 @@ public class SecurityService {
 
     public String login(String name, String password) {
         if (checkPassword(name, password)) {
-            return generateAndRegisterToken();
+            return generateAndRegisterToken(userService.getUserByName(name));
         }
         return null;
     }
@@ -62,15 +68,15 @@ public class SecurityService {
         return passwordEncryptor.encryptPassword(password, user.getGeneratedSalt()).equals(user.getPassword());
     }
 
-    private String generateAndRegisterToken() {
+    private String generateAndRegisterToken(User user) {
         String uuid = UUID.randomUUID().toString();
-        Session session = new Session(LocalDateTime.now().plusHours(4), new ArrayList<>());
+        Session session = new Session(LocalDateTime.now().plusHours(settingsLoader.getTimeToLiveSession() / 3600), new ArrayList<>(), user);
         sessionList.put(uuid, session);
         return uuid;
     }
 
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
+    public void setSettingsLoader(SettingsLoader settingsLoader) {
+        this.settingsLoader = settingsLoader;
     }
 
     public void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
@@ -80,11 +86,4 @@ public class SecurityService {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-}
-
-@Getter
-@AllArgsConstructor
-class Session {
-    LocalDateTime expireDate;
-    List<Product> cart;
 }
