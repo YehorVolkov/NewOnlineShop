@@ -1,6 +1,8 @@
 package com.iryna.web.servlet;
 
 import com.iryna.service.ProductService;
+import com.iryna.service.ServiceLocator;
+import com.iryna.service.UserService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,7 @@ import java.io.IOException;
 
 public class RemoveProductServlet extends HttpServlet {
 
-    private ProductService productService;
+    private ProductService productService = ServiceLocator.getService(ProductService.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -18,7 +20,4 @@ public class RemoveProductServlet extends HttpServlet {
         resp.sendRedirect("/product/editor");
     }
 
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
-    }
 }

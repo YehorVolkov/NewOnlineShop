@@ -1,3 +1,4 @@
+/*
 package com.iryna;
 
 import com.iryna.db.jdbc.JdbcUserDao;
@@ -103,3 +104,4 @@ public class Main {
         server.start();
     }
 }
+*/

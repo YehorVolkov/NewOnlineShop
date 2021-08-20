@@ -1,5 +1,6 @@
 package com.iryna.web.servlet;
 
+import com.iryna.service.ServiceLocator;
 import com.iryna.service.UserService;
 import com.iryna.web.parser.CookieParser;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 public class AddToCartServlet extends HttpServlet {
 
-    private UserService userService;
+    private UserService userService = ServiceLocator.getService(UserService.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -20,7 +21,4 @@ public class AddToCartServlet extends HttpServlet {
         resp.sendRedirect("/products");
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 }
