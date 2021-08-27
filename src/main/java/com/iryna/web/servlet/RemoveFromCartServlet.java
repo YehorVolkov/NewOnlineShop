@@ -17,7 +17,7 @@ public class RemoveFromCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String token = CookieParser.getTokenFromCookies(req.getCookies());
-        userService.removeProductFromChart(token, Integer.parseInt(req.getParameter("id")));
+        userService.removeProductFromCart(token, Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect("/cart");
     }*/
 }

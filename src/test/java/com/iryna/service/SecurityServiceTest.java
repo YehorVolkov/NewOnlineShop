@@ -53,9 +53,9 @@ class SecurityServiceTest {
         assertFalse(securityService.isTokenValid(token));
     }
 
-    @DisplayName("add Product To Chart Test")
+    @DisplayName("add Product To Cart Test")
     @Test
-    void addProductToChartTest() {
+    void addProductToCartTest() {
         PasswordEncryptor passwordEncryptor = mock(PasswordEncryptor.class);
         UserService userService = mock(UserService.class);
 
@@ -71,9 +71,9 @@ class SecurityServiceTest {
         Product product1 = Product.builder().id(1).productDescription("desc").name("pr1").build();
         Product product2 = Product.builder().id(2).productDescription("desc2").name("pr2").build();
 
-        userService.addProductToChart(token, 1);
-        userService.addProductToChart(token, 2);
-        List<Product> products = securityService.getChartByToken(token);
+        userService.addProductToCart(token, 1);
+        userService.addProductToCart(token, 2);
+        List<Product> products = securityService.getCartByToken(token);
         assertNotNull(products);
         assertEquals(2, products.size());
         products.remove(product1);

@@ -12,13 +12,13 @@ public class UserService {
     private SecurityService securityService;
     private ProductService productService;
 
-    public void removeProductFromChart(String token, int productId) {
-        List<Product> cart = securityService.getChartByToken(token);
+    public void removeProductFromCart(String token, int productId) {
+        List<Product> cart = securityService.getCartByToken(token);
         cart.remove(productService.findById(productId));
     }
 
-    public void addProductToChart(String token, int productId) {
-        List<Product> cart = securityService.getChartByToken(token);
+    public void addProductToCart(String token, int productId) {
+        List<Product> cart = securityService.getCartByToken(token);
         cart.add(productService.findById(productId));
     }
 

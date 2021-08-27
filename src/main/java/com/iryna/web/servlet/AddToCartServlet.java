@@ -17,7 +17,7 @@ public class AddToCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String token = CookieParser.getTokenFromCookies(req.getCookies());
-        userService.addProductToChart(token, Integer.parseInt(req.getParameter("id")));
+        userService.addProductToCart(token, Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect("/products");
     }*/
 

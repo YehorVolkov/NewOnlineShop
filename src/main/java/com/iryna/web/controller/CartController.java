@@ -33,14 +33,14 @@ public class CartController {
     @PostMapping("/add")
     public String addToCart(HttpServletRequest req) {
         String token = CookieParser.getTokenFromCookies(req.getCookies());
-        userService.addProductToChart(token, Integer.parseInt(req.getParameter("id")));
+        userService.addProductToCart(token, Integer.parseInt(req.getParameter("id")));
         return "redirect:/products";
     }
 
     @PostMapping("/remove")
     public String removeFromCart(HttpServletRequest req) {
         String token = CookieParser.getTokenFromCookies(req.getCookies());
-        userService.removeProductFromChart(token, Integer.parseInt(req.getParameter("id")));
+        userService.removeProductFromCart(token, Integer.parseInt(req.getParameter("id")));
         return "redirect:/cart";
     }
 }

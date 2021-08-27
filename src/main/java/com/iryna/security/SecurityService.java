@@ -20,7 +20,7 @@ public class SecurityService {
 
     private HashMap<String, Session> sessionList = new HashMap();
 
-    public List<Product> getChartByToken(String token) {
+    public List<Product> getCartByToken(String token) {
         return sessionList.get(token).getCart();
     }
 
