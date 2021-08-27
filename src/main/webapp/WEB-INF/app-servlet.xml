@@ -32,8 +32,6 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="session" class="com.iryna.security.Session"/>
-
     <bean id="passwordEncryptor" class="com.iryna.security.PasswordEncryptor"/>
 
     <bean id="settingsLoader" class="com.iryna.loader.SettingsLoader">

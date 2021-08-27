@@ -1,5 +1,6 @@
 package com.iryna.web.controller;
 
+import com.iryna.entity.Product;
 import com.iryna.security.Session;
 import com.iryna.service.UserService;
 import com.iryna.web.parser.CookieParser;
@@ -9,23 +10,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
 public class CartController {
 
-    // TODO CHECK CART PAGE HREFS!
-
     @Autowired
     private UserService userService;
 
     @GetMapping
-    public String doGet(@RequestParam Session session, Model model) {
-        model.addAttribute("products", session.getCart());
+    public String doGet(HttpServletRequest req, Model model) {
+        Session session = (Session) req.getAttribute("session");
+        List<Product> productsAtCart = session.getCart();
+        model.addAttribute("products", productsAtCart);
         return "product_cart";
+
     }
 
     @PostMapping("/add")
