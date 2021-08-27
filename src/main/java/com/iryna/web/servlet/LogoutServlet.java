@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class LogoutServlet extends HttpServlet {
 
-    private SecurityService securityService = ServiceLocator.getService(SecurityService.class);
+/*    private SecurityService securityService = ServiceLocator.getService(SecurityService.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -24,5 +24,5 @@ public class LogoutServlet extends HttpServlet {
             }
         }
         response.sendRedirect("/login");
-    }
+    }*/
 }

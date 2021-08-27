@@ -15,7 +15,7 @@ public class HtmlCreator {
         Writer stream = new StringWriter();
         try {
             Configuration configuration = new Configuration();
-            configuration.setClassForTemplateLoading(HtmlCreator.class, "/templates/");
+            configuration.setClassForTemplateLoading(HtmlCreator.class, "/src/main/webapp/templates/");
             Template template = configuration.getTemplate(path);
             template.process(templateData, stream);
         } catch (IOException | TemplateException e) {

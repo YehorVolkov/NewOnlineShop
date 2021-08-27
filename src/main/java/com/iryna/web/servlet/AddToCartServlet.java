@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AddToCartServlet extends HttpServlet {
-
+/*
     private UserService userService = ServiceLocator.getService(UserService.class);
 
     @Override
@@ -19,6 +19,6 @@ public class AddToCartServlet extends HttpServlet {
         String token = CookieParser.getTokenFromCookies(req.getCookies());
         userService.addProductToChart(token, Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect("/products");
-    }
+    }*/
 
 }

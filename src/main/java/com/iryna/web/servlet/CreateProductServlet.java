@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class CreateProductServlet extends HttpServlet {
 
-    private ProductService productService = ServiceLocator.getService(ProductService.class);
+/*    private ProductService productService = ServiceLocator.getService(ProductService.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -31,5 +31,5 @@ public class CreateProductServlet extends HttpServlet {
         productService.createProduct(product);
 
         response.sendRedirect("/products");
-    }
+    }*/
 }

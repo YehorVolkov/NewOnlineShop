@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.iryna"/>
+
+    <bean id="productService" class="com.iryna.service.ProductService">
+        <property name="productDao" ref="jdbcProductDao"/>
+    </bean>
+
+    <bean id="jdbcProductDao" class="com.iryna.db.jdbc.JdbcProductDao">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="dataSource" class="org.postgresql.ds.PGSimpleDataSource">
+        <property name="url" value="jdbc:postgresql://localhost:5432/NewOnlineShop"/>
+        <property name="user" value="postgres"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <bean id="jdbcUserDao" class="com.iryna.db.jdbc.JdbcUserDao">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="session" class="com.iryna.security.Session"/>
+
+    <bean id="passwordEncryptor" class="com.iryna.security.PasswordEncryptor"/>
+
+    <bean id="settingsLoader" class="com.iryna.loader.SettingsLoader">
+        <constructor-arg index="0" type="java.lang.String" value="config.properties"/>
+    </bean>
+
+    <bean id="securityService" class="сom.iryna.security.SecurityService">
+        <property name="userService" ref="userService"/>
+        <property name="passwordEncryptor" ref="passwordEncryptor"/>
+        <property name="settingsLoader" ref="settingsLoader"/>
+        <util:map id="sessionList" map-class="java.util.HashMap" key-type="java.lang.String" value-type="session"/>
+    </bean>
+
+    <bean id="userService" class="com.iryna.service.UserService">
+        <property name="jdbcUserDao" ref="jdbcUserDao"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="productService" ref="productService"/>
+    </bean>
+
+
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="false"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".html"/>
+    </bean>
+
+    <mvc:annotation-driven/>
+
+</beans>

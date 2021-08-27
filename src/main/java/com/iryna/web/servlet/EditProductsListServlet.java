@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class EditProductsListServlet extends HttpServlet {
 
-    private ProductService productService = ServiceLocator.getService(ProductService.class);
+/*    private ProductService productService = ServiceLocator.getService(ProductService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -26,6 +26,7 @@ public class EditProductsListServlet extends HttpServlet {
         resp.getWriter().println(HtmlCreator.generatePage(templateData, "/edit_product_list.html"));
     }
 
+    // TODO WHERE WAS IT EVEN USED?
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
@@ -35,6 +36,7 @@ public class EditProductsListServlet extends HttpServlet {
         resp.sendRedirect("/product/editor");
     }
 
+    // TODO WHERE WAS IT EVEN USED?
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
 
@@ -45,5 +47,5 @@ public class EditProductsListServlet extends HttpServlet {
                 .productDescription(String.valueOf(req.getParameter("productDescription")))
                 .creationDate(LocalDateTime.now())
                 .build());
-    }
+    }*/
 }

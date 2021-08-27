@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ProductListServlet extends HttpServlet {
 
-    private ProductService productService = ServiceLocator.getService(ProductService.class);
+/*    private ProductService productService = ServiceLocator.getService(ProductService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -31,5 +31,5 @@ public class ProductListServlet extends HttpServlet {
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productService.getSearchedProducts(req.getParameter("searchingProduct")));
         resp.getWriter().println(HtmlCreator.generatePage(templateData, "/product_list.html"));
-    }
+    }*/
 }

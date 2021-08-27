@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class LoginServlet extends HttpServlet {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+/*    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private SecurityService securityService = ServiceLocator.getService(SecurityService.class);
     // TODO loader in ServiceLocator, is it ok?
     private SettingsLoader settingsLoader = ServiceLocator.getService(SettingsLoader.class);
@@ -38,5 +38,5 @@ public class LoginServlet extends HttpServlet {
             log.info("Login successful");
             response.sendRedirect("/products");
         }
-    }
+    }*/
 }

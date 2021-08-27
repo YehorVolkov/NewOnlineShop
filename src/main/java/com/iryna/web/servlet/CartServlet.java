@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class CartServlet extends HttpServlet {
 
-    @Override
+/*    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         Session session = (Session) req.getAttribute("session");
@@ -22,5 +22,5 @@ public class CartServlet extends HttpServlet {
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("products", productsAtCart);
         resp.getWriter().println(HtmlCreator.generatePage(templateData, "/product_cart.html"));
-    }
+    }*/
 }

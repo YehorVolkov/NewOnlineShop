@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class EditProductServlet extends HttpServlet {
 
-    private ProductService productService = ServiceLocator.getService(ProductService.class);
+/*    private ProductService productService = ServiceLocator.getService(ProductService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -43,5 +43,5 @@ public class EditProductServlet extends HttpServlet {
 
     public void setProductService(ProductService productService) {
         this.productService = productService;
-    }
+    }*/
 }

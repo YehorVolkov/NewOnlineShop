@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class RemoveFromCartServlet extends HttpServlet {
 
-    private UserService userService = ServiceLocator.getService(UserService.class);
+/*    private UserService userService = ServiceLocator.getService(UserService.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -19,5 +19,5 @@ public class RemoveFromCartServlet extends HttpServlet {
         String token = CookieParser.getTokenFromCookies(req.getCookies());
         userService.removeProductFromChart(token, Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect("/cart");
-    }
+    }*/
 }
