@@ -40,11 +40,10 @@
         <constructor-arg index="0" type="java.lang.String" value="config.properties"/>
     </bean>
 
-    <bean id="securityService" class="сom.iryna.security.SecurityService">
+    <bean id="securityService" class="com.iryna.security.SecurityService">
         <property name="userService" ref="userService"/>
         <property name="passwordEncryptor" ref="passwordEncryptor"/>
         <property name="settingsLoader" ref="settingsLoader"/>
-        <util:map id="sessionList" map-class="java.util.HashMap" key-type="java.lang.String" value-type="session"/>
     </bean>
 
     <bean id="userService" class="com.iryna.service.UserService">
