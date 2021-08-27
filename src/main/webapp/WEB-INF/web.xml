@@ -19,7 +19,7 @@
 
     <!--    <servlet>
             <servlet-name>createProductServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.CreateProductServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.CreateProductServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>createProductServlet</servlet-name>
@@ -28,7 +28,7 @@
 
         <servlet>
             <servlet-name>editProductServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.EditProductServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.EditProductServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>editProductServlet</servlet-name>
@@ -37,7 +37,7 @@
 
         <servlet>
             <servlet-name>editProductsListServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.EditProductsListServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.EditProductsListServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>editProductsListServlet</servlet-name>
@@ -46,7 +46,7 @@
 
         <servlet>
             <servlet-name>productListServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.ProductListServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.ProductListServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>productListServlet</servlet-name>
@@ -55,7 +55,7 @@
 
         <servlet>
             <servlet-name>removeFromCartServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.RemoveFromCartServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.RemoveFromCartServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>removeFromCartServlet</servlet-name>
@@ -64,7 +64,7 @@
 
         <servlet>
             <servlet-name>loginServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.LoginServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.LoginServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>loginServlet</servlet-name>
@@ -73,7 +73,7 @@
 
         <servlet>
             <servlet-name>logoutServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.LogoutServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.LogoutServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>logoutServlet</servlet-name>
@@ -82,7 +82,7 @@
 
         <servlet>
             <servlet-name>removeFromCartServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.RemoveFromCartServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.RemoveFromCartServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>removeFromCartServlet</servlet-name>
@@ -91,7 +91,7 @@
 
         <servlet>
             <servlet-name>removeProductServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.RemoveProductServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.RemoveProductServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>removeProductServlet</servlet-name>
@@ -100,7 +100,7 @@
 
         <servlet>
             <servlet-name>addToCartServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.AddToCartServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.AddToCartServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>addToCartServlet</servlet-name>
@@ -109,7 +109,7 @@
 
         <servlet>
             <servlet-name>cartServlet</servlet-name>
-            <servlet-class>com.iryna.web.servlet.CartServlet</servlet-class>
+            <servlet-class>com.yehor.web.servlet.CartServlet</servlet-class>
         </servlet>
         <servlet-mapping>
             <servlet-name>cartServlet</servlet-name>

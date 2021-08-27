@@ -12,13 +12,13 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.iryna"/>
+    <context:component-scan base-package="com.yehor"/>
 
-    <bean id="productService" class="com.iryna.service.ProductService">
+    <bean id="productService" class="com.yehor.service.ProductService">
         <property name="productDao" ref="jdbcProductDao"/>
     </bean>
 
-    <bean id="jdbcProductDao" class="com.iryna.db.jdbc.JdbcProductDao">
+    <bean id="jdbcProductDao" class="com.yehor.db.jdbc.JdbcProductDao">
         <constructor-arg ref="dataSource"/>
     </bean>
 
@@ -28,23 +28,23 @@
         <property name="password" value="root"/>
     </bean>
 
-    <bean id="jdbcUserDao" class="com.iryna.db.jdbc.JdbcUserDao">
+    <bean id="jdbcUserDao" class="com.yehor.db.jdbc.JdbcUserDao">
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="passwordEncryptor" class="com.iryna.security.PasswordEncryptor"/>
+    <bean id="passwordEncryptor" class="com.yehor.security.PasswordEncryptor"/>
 
-    <bean id="settingsLoader" class="com.iryna.loader.SettingsLoader">
+    <bean id="settingsLoader" class="com.yehor.loader.SettingsLoader">
         <constructor-arg index="0" type="java.lang.String" value="config.properties"/>
     </bean>
 
-    <bean id="securityService" class="com.iryna.security.SecurityService">
+    <bean id="securityService" class="com.yehor.security.SecurityService">
         <property name="userService" ref="userService"/>
         <property name="passwordEncryptor" ref="passwordEncryptor"/>
         <property name="settingsLoader" ref="settingsLoader"/>
     </bean>
 
-    <bean id="userService" class="com.iryna.service.UserService">
+    <bean id="userService" class="com.yehor.service.UserService">
         <property name="jdbcUserDao" ref="jdbcUserDao"/>
         <property name="securityService" ref="securityService"/>
         <property name="productService" ref="productService"/>
